@@ -228,6 +228,7 @@ async fn create_from_usb(device: UsbDeviceInfo) -> Result<BackplaneConnector> {
         info,
         threads,
         telemetry_rx,
+        command_tx: None,
         shutdown: Some(shutdown),
     })
 }
@@ -380,6 +381,8 @@ impl Bitaxe {
 
         // Publish telemetry
         let _ = tx.send(BoardTelemetry {
+            asics: Vec::new(),
+            bzm2_tuning: None,
             name: self.board_name.clone(),
             model: self.board_model.into(),
             serial: self.board_serial.clone(),
